@@ -10,7 +10,7 @@ const generateToken = (id) => {
 // @desc    Register a new user
 // @route   POST /api/auth/register
 router.post('/register', async (req, res) => {
-    const { username, email, password, department, year, interests } = req.body;
+    const { username, email, password, role, department, year, interests } = req.body;
 
     try {
         const userExists = await User.findOne({ $or: [{ email }, { username }] });
@@ -22,6 +22,7 @@ router.post('/register', async (req, res) => {
             username,
             email,
             password,
+            role,
             department,
             year,
             interests

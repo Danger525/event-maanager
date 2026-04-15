@@ -31,6 +31,10 @@ const Signup = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (step === 1) {
+      if (!formData.role) {
+        toast.error('Please select a role', { description: 'Are you a student, organizer, or admin?' });
+        return;
+      }
       setStep(2);
     } else {
       try {
