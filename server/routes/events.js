@@ -98,19 +98,21 @@ router.get('/analytics', protect, admin, async (req, res) => {
         const trends = await Event.aggregate([
             {
                 $group: {
-                    _id: { $dateToString: { format: "%a", date: "$createdAt" } },
+                    _id: { $dayOfWeek: "$createdAt" },
+                    dayName: { $first: { $dateToString: { format: "%a", date: "$createdAt" } } },
                     registrations: { $sum: "$registeredCount" }
                 }
             },
+            { $sort: { "_id": 1 } },
             { $limit: 7 },
-            { $project: { name: "$_id", registrations: 1, _id: 0 } }
+            { $project: { name: "$dayName", registrations: 1, _id: 0 } }
         ]);
 
         res.json({
             stats: stats[0] || { totalRegistrations: 0, totalEvents: 0, activeEvents: 0 },
-            categorySplit,
-            departmentSplit,
-            trends
+            categorySplit: categorySplit || [],
+            departmentSplit: departmentSplit || [],
+            trends: trends || []
         });
     } catch (err) {
         res.status(500).json({ message: err.message });
