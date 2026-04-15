@@ -1,0 +1,14 @@
+{
+  "name": "campus-hub-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "build:client": "npm run build --prefix client",
+    "build:server": "npm run start --prefix server",
+    "seed:sample": "npm run seed:sample --prefix client",
+    "seed:full": "npm run seed:full --prefix server",
+    "check:users": "npm run check:users --prefix server"
+  }
+}
